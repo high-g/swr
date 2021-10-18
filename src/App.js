@@ -1,14 +1,12 @@
-import useSWR from 'swr'
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
+import { useUser } from './useUser'
 
 function App() {
-  const { data, error } = useSWR('https://jsonplaceholder.typicode.com/todos/1', fetcher)
+  const { user, isLoading, isError } = useUser(1)
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (isError) return <div>failed to load</div>
+  if (!isLoading) return <div>loading...</div>
 
-  console.log('data', data)
+  console.log('data', user)
 
   return (
     <div className="App">
